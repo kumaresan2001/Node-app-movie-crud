@@ -3,15 +3,17 @@ dotenv.config();
 // const express = require("express"); // "type": "commonjs"
 import express from "express"; // "type": "module"
 import { MongoClient } from "mongodb";
+import moviesRouter from "./router/movies.router.js";
+
 const app = express();
 
 const PORT = process.env.PORT;
-// const MONGO_URL = "mongodb://127.0.0.1";
+const MONGO_URL = "mongodb://127.0.0.1";
 console.log(process.env.MONGO_URL);
 
-const MONGO_URL = process.env.MONGO_URL;
+// const MONGO_URL = process.env.MONGO_URL;
 
-const client = new MongoClient(MONGO_URL); // dial
+export const client = new MongoClient(MONGO_URL); // dial
 // Top level await
 await client.connect(); // call
 console.log("Mongo is connected !!!  ");
@@ -131,61 +133,11 @@ const movies = [
     id: "109",
   },
 ];
-app.get("/movies", async function (request, response) {
-  const movies = await client
-    .db("mogodp1")
-    .collection("movies")
-    .find({})
-    .toArray();
-  response.send(movies);
-});
-// movies id
-app.get("/movies/:id", async function (request, response) {
-  const { id } = request.params;
-  //db.movies.findOne({id:"100"})
-  const movie = await client
-    .db("mogodp1")
-    .collection("movies")
-    .findOne({ id: id });
-  movie
-    ? response.send(movie)
-    : response.status(404).send({ message: "movie is not" });
-});
+// app.get("/", async function (request, response) {
+//   const movies = await allmovie();
+//   response.send(movies);
+// });
 
-//express.json(-middleware)
-app.post("/movies", async function (request, response) {
-  const data = request.body;
-  console.log(data);
-  const result = await client
-    .db("mogodp1")
-    .collection("movies")
-    .insertMany(data);
-  response.send(result);
-});
-// movies deleted by id
-app.delete("/movies/:id", async function (request, response) {
-  const { id } = request.params;
-  //db.movies.deleteOne({id:"100"})
-  const result = await client
-    .db("mogodp1")
-    .collection("movies")
-    .deleteOne({ id: id });
-  result.deletedCount >= 1
-    ? response.send({ message: "delete movie is successful" })
-    : response.status(404).send({ message: "movie is not" });
-});
-
-//update
-app.put("/movies/:id", async function (request, response) {
-  const { id } = request.params;
-  const data = request.body;
-
-  const result = await client
-    //db.movies.updatedOne({id:id},{$set:data})
-    .db("mogodp1")
-    .collection("movies")
-    .updateOne({ id: id }, { $set: data });
-  response.send(result);
-});
+app.use("/movies", moviesRouter);
 
 app.listen(PORT, () => console.log(`The server started in: ${PORT} ✨✨`));
