@@ -6,10 +6,10 @@ import { MongoClient } from "mongodb";
 const app = express();
 
 const PORT = process.env.PORT;
-const MONGO_URL = "mongodb://127.0.0.1";
-// console.log(process.env.MONGO_URL);
+// const MONGO_URL = "mongodb://127.0.0.1";
+console.log(process.env.MONGO_URL);
 
-// const MONGO_URL = process.env.MONGO_URL;
+const MONGO_URL = process.env.MONGO_URL;
 
 const client = new MongoClient(MONGO_URL); // dial
 // Top level await
@@ -157,7 +157,7 @@ app.post("/movies", async function (request, response) {
   const data = request.body;
   console.log(data);
   const result = await client
-    .db("mogodb1")
+    .db("mogodp1")
     .collection("movies")
     .insertMany(data);
   response.send(result);
