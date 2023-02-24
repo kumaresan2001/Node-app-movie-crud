@@ -4,9 +4,10 @@ dotenv.config();
 import express from "express"; // "type": "module"
 import { MongoClient } from "mongodb";
 import moviesRouter from "./router/movies.router.js";
-
+import cors from "cors";
 const app = express();
-
+app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
 const PORT = process.env.PORT;
 const MONGO_URL = "mongodb://127.0.0.1";
 console.log(process.env.MONGO_URL);
@@ -18,7 +19,7 @@ export const client = new MongoClient(MONGO_URL); // dial
 await client.connect(); // call
 console.log("Mongo is connected !!!  ");
 
-app.use(express.json());
+app.use(cors());
 
 app.get("/", function (request, response) {
   response.send("🙋‍♂️, 🌏 hi");

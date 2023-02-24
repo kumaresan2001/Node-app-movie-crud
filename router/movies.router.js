@@ -1,4 +1,5 @@
 import express from "express";
+// const express = require("express");
 import {
   allmovie,
   idbymovie,
@@ -8,12 +9,22 @@ import {
 } from "../service/movies.service.js";
 const router = express.Router();
 
-router.get("/", async function (request, response) {
+//express.json(-middleware)
+router.post("/post", async function (request, response) {
+  const data = request.body;
+  // return res.status(200).json(req.body);
+  const result = await postmovie(data);
+  result
+    ? response.send({ message: "post movie is successful" })
+    : response.status(404).send({ message: "movie is not" });
+});
+
+router.get("/getall", async function (request, response) {
   const movies = await allmovie();
   response.send(movies);
 });
 // movies id
-router.get("/:id", async function (request, response) {
+router.get("/getall/:id", async function (request, response) {
   const { id } = request.params;
   //db.movies.findOne({id:"100"})
   const movie = await idbymovie(id);
@@ -22,15 +33,8 @@ router.get("/:id", async function (request, response) {
     : response.status(404).send({ message: "movie is not" });
 });
 
-//express.json(-middleware)
-router.post("/movies", async function (request, response) {
-  const data = request.body;
-  console.log(data);
-  const result = await postmovie(data);
-  response.send(result);
-});
 // movies deleted by id
-router.delete("/:id", async function (request, response) {
+router.delete("/delete/:id", async function (request, response) {
   const { id } = request.params;
   //db.movies.deleteOne({id:"100"})
   const result = await deletemovie(id);
