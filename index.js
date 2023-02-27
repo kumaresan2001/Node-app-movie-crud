@@ -4,15 +4,23 @@ dotenv.config();
 import express from "express"; // "type": "module"
 import { MongoClient } from "mongodb";
 import moviesRouter from "./router/movies.router.js";
+import bodyParser from "body-parser";
 import cors from "cors";
 const app = express();
-app.use(express.json());
-// app.use(express.urlencoded({ extended: false }));
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+// app.use(express.json());
+
+app.use("/movies", moviesRouter);
+
 const PORT = process.env.PORT;
-const MONGO_URL = "mongodb://127.0.0.1";
+
+// const MONGO_URL = "mongodb://127.0.0.1:27017";
+
 console.log(process.env.MONGO_URL);
 
-// const MONGO_URL = process.env.MONGO_URL;
+const MONGO_URL = process.env.MONGO_URL;
 
 export const client = new MongoClient(MONGO_URL); // dial
 // Top level await
@@ -24,6 +32,7 @@ app.use(cors());
 app.get("/", function (request, response) {
   response.send("🙋‍♂️, 🌏 hi");
 });
+
 const movies = [
   {
     id: "99",
@@ -134,11 +143,5 @@ const movies = [
     id: "109",
   },
 ];
-// app.get("/", async function (request, response) {
-//   const movies = await allmovie();
-//   response.send(movies);
-// });
-
-app.use("/movies", moviesRouter);
 
 app.listen(PORT, () => console.log(`The server started in: ${PORT} ✨✨`));

@@ -9,9 +9,11 @@ import {
 } from "../service/movies.service.js";
 const router = express.Router();
 
-//express.json(-middleware)
-router.post("/post", async function (request, response) {
+// express.json(-middleware);
+router.post("/create", async function (request, response) {
   const data = request.body;
+  // console.log("hi");
+  // console.log(data);
   // return res.status(200).json(req.body);
   const result = await postmovie(data);
   result
