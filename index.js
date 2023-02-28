@@ -11,6 +11,7 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors());
 // app.use(express.json());
 
 app.use("/movie", moviesRouter);
@@ -22,7 +23,7 @@ const PORT = process.env.PORT;
 console.log(process.env.MONGO_URL);
 
 const MONGO_URL = process.env.MONGO_URL;
-app.use(cors());
+
 export const client = new MongoClient(MONGO_URL); // dial
 // Top level await
 await client.connect(); // call
