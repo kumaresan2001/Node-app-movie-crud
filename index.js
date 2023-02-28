@@ -8,6 +8,27 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import bcrypt from "bcrypt";
 const app = express();
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+
+  app.options("*", (req, res) => {
+    // allowed XHR methods
+    res.header(
+      "Access-Control-Allow-Methods",
+      "GET, PATCH, PUT, POST, DELETE, OPTIONS"
+    );
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    );
+    res.send();
+  });
+  next();
+});
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
