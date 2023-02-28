@@ -23,6 +23,11 @@ router.post("/", async function (request, response) {
 
 router.get("/", async function (request, response) {
   const movies = await allmovie();
+  response.header("Access-Control-Allow-Origin", "*");
+  response.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
   response.send(movies);
 });
 // movies id
