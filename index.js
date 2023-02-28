@@ -4,9 +4,10 @@ dotenv.config();
 import express from "express"; // "type": "module"
 import { MongoClient } from "mongodb";
 import moviesRouter from "./router/movies.router.js";
+import usersRouter from "./router/users.router.js";
 import bodyParser from "body-parser";
 import cors from "cors";
-import bcrypt from "bcrypt";
+
 const app = express();
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -36,6 +37,7 @@ app.use(cors());
 // app.use(express.json());
 
 app.use("/movie", moviesRouter);
+app.use("/users", usersRouter);
 
 const PORT = process.env.PORT;
 
