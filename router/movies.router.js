@@ -10,7 +10,7 @@ import {
 const router = express.Router();
 
 // express.json(-middleware);
-router.post("/create", async function (request, response) {
+router.post("/", async function (request, response) {
   const data = request.body;
   // console.log("hi");
   // console.log(data);
@@ -21,12 +21,12 @@ router.post("/create", async function (request, response) {
     : response.status(404).send({ message: "movie is not" });
 });
 
-router.get("/getall", async function (request, response) {
+router.get("/", async function (request, response) {
   const movies = await allmovie();
   response.send(movies);
 });
 // movies id
-router.get("/getall/:id", async function (request, response) {
+router.get("/:id", async function (request, response) {
   const { id } = request.params;
   //db.movies.findOne({id:"100"})
   const movie = await idbymovie(id);
@@ -36,7 +36,7 @@ router.get("/getall/:id", async function (request, response) {
 });
 
 // movies deleted by id
-router.delete("/delete/:id", async function (request, response) {
+router.delete("/:id", async function (request, response) {
   const { id } = request.params;
   //db.movies.deleteOne({id:"100"})
   const result = await deletemovie(id);
@@ -46,7 +46,7 @@ router.delete("/delete/:id", async function (request, response) {
 });
 
 // update
-router.put("/movies/:id", async function (request, response) {
+router.put("/:id", async function (request, response) {
   const { id } = request.params;
   const data = request.body;
   console.log(id);

@@ -6,6 +6,7 @@ import { MongoClient } from "mongodb";
 import moviesRouter from "./router/movies.router.js";
 import bodyParser from "body-parser";
 import cors from "cors";
+import bcrypt from "bcrypt";
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
