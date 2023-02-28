@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // app.use(express.json());
 
-app.use("/movies", moviesRouter);
+app.use("/movie", moviesRouter);
 
 const PORT = process.env.PORT;
 
@@ -21,13 +21,11 @@ const PORT = process.env.PORT;
 console.log(process.env.MONGO_URL);
 
 const MONGO_URL = process.env.MONGO_URL;
-
+app.use(cors());
 export const client = new MongoClient(MONGO_URL); // dial
 // Top level await
 await client.connect(); // call
 console.log("Mongo is connected !!!  ");
-
-app.use(cors());
 
 app.get("/", function (request, response) {
   response.send("🙋‍♂️, 🌏 hi");
