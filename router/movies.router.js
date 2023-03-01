@@ -1,5 +1,6 @@
 import express from "express";
 // const express = require("express");
+import { auth } from "../middleware/auth.js";
 import {
   allmovie,
   idbymovie,
@@ -22,12 +23,17 @@ router.post("/", async function (request, response) {
 });
 
 router.get("/", async function (request, response) {
-  const movies = await allmovie();
+  if (request.query.rating) {
+    request.query.rating = +request.query.rating;
+  }
+  console.log(request.query);
+  const movies = await allmovie(request.query);
   response.header("Access-Control-Allow-Origin", "*");
   response.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
+
   response.send(movies);
 });
 // movies id
