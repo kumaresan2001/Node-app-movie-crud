@@ -17,10 +17,7 @@ export async function postmovie(data) {
   return await client.db("mogodp1").collection("movies").insertOne(data);
 }
 export async function idbymovie(id) {
-  return await client
-    .db("mogodp1")
-    .collection("movies")
-    .findOne({ _id: new ObjectId(id) });
+  return await client.db("mogodp1").collection("movies").findOne({ _id: id });
 }
 export async function allmovie(query) {
   return await client.db("mogodp1").collection("movies").find(query).toArray();
