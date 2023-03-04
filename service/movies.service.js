@@ -15,7 +15,7 @@ export async function deletemovie(id) {
     .deleteOne({ _id: new ObjectId(id) });
 }
 export async function postmovie(data) {
-  return await client.db("mogodp1").collection("movies").insertOne(data);
+  return await client.db("mogodp1").collection("movies").insertMany(data);
 }
 export async function idbymovie(id) {
   console.log(typeof id, id);
