@@ -5,7 +5,7 @@ export async function updatemovie(id, data) {
   return await client
     .db("mogodp1")
     .collection("movies")
-    .updateOne({ _id: new ObjectId(id) }, { $set: data });
+    .updateOne({ _id: id }, { $set: data });
 }
 export async function deletemovie(id) {
   return await client
