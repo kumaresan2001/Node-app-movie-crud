@@ -41,6 +41,7 @@ router.get("/:id", async function (request, response) {
   const { id } = request.params;
   //db.movies.findOne({id:"100"})
   const movie = await idbymovie(id);
+  console.log(movie);
   movie
     ? response.send(movie)
     : response.status(404).send({ message: "movie is not" });
